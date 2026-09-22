@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة عملاء ومبيعات محل المبيدات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== شريط علوي ===================== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">🌿</span>
+      <span class="brand-text">إدارة عملاء ومبيعات محل المبيدات</span>
+    </div>
+    <button class="btn-home" data-nav="home">
+      <span class="btn-home-icon">⌂</span> الرئيسية
+    </button>
+  </div>
+</header>
+
+<main class="app">
+
+  <!-- ===================== الصفحة الرئيسية ===================== -->
+  <section id="page-home" class="page">
+
+    <div class="hero">
+      <h1>البحث عن عميل</h1>
+      <p class="hero-sub">اكتب اسم العميل للوصول إلى ملفه ومشترياته</p>
+
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="اكتب اسم العميل للبحث..." autocomplete="off">
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <div id="search-results" class="search-results hidden"></div>
+    </div>
+
+    <div class="home-actions">
+      <button class="btn btn-primary btn-lg" id="btn-add-customer">
+        <span class="btn-icon">＋</span> إضافة عميل
+      </button>
+      <button class="btn btn-secondary btn-lg" id="btn-all-customers">
+        <span class="btn-icon">☰</span> عرض كل العملاء
+      </button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number" id="stat-customers-count">0</div>
+        <div class="stat-label">عدد العملاء المسجلين</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-sales-count">0</div>
+        <div class="stat-label">عدد عمليات الشراء</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===================== صفحة كل العملاء ===================== -->
+  <section id="page-all-customers" class="page hidden">
+    <div class="page-header">
+      <h2>كل العملاء</h2>
+      <button class="btn btn-primary" id="btn-add-customer-2">
+        <span class="btn-icon">＋</span> إضافة عميل
+      </button>
+    </div>
+
+    <div id="all-customers-empty" class="empty-state hidden">
+      <div class="empty-icon">🧑‍🌾</div>
+      <p>لسه مفيش عملاء مسجلين.</p>
+      <button class="btn btn-primary" id="btn-add-customer-empty">إضافة أول عميل</button>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table" id="all-customers-table">
+        <thead>
+          <tr>
+            <th>الاسم</th>
+            <th>رقم الهاتف</th>
+            <th>العنوان</th>
+            <th>عدد عمليات الشراء</th>
+          </tr>
+        </thead>
+        <tbody id="all-customers-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== صفحة العميل ===================== -->
+  <section id="page-customer" class="page hidden">
+
+    <div class="customer-card">
+      <div class="customer-card-top">
+        <h2 id="cust-name">—</h2>
+        <div class="customer-card-actions">
+          <button class="btn btn-ghost" id="btn-edit-customer">تعديل البيانات</button>
+          <button class="btn btn-danger-outline" id="btn-delete-customer">حذف العميل</button>
+        </div>
+      </div>
+      <div class="customer-info-grid">
+        <div class="info-item">
+          <span class="info-label">رقم الهاتف</span>
+          <span class="info-value" id="cust-phone">—</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">العنوان</span>
+          <span class="info-value" id="cust-address">—</span>
+        </div>
+        <div class="info-item info-item-wide">
+          <span class="info-label">ملاحظات</span>
+          <span class="info-value" id="cust-notes">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h3>سجل المشتريات</h3>
+      <button class="btn btn-primary" id="btn-add-purchase">
+        <span class="btn-icon">＋</span> إضافة عملية شراء
+      </button>
+    </div>
+
+    <div id="purchases-empty" class="empty-state hidden">
+      <div class="empty-icon">🧾</div>
+      <p>لسه مفيش عمليات شراء لهذا العميل.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table" id="purchases-table">
+        <thead>
+          <tr>
+            <th>المنتج</th>
+            <th>النوع</th>
+            <th>السعر</th>
+            <th>الكمية</th>
+            <th>الإجمالي</th>
+            <th>التاريخ</th>
+            <th>ملاحظات</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="purchases-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-bar">
+      إجمالي مشتريات العميل: <span id="cust-total">0</span> جنيه
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== نافذة إضافة/تعديل عميل ===================== -->
+<div class="modal-overlay hidden" id="modal-customer">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-customer-title">إضافة عميل جديد</h3>
+      <button class="modal-close" data-close="modal-customer">✕</button>
+    </div>
+    <form id="form-customer" class="modal-form">
+      <label>
+        الاسم الكامل *
+        <input type="text" id="input-cust-name" required placeholder="اكتب اسم العميل بالكامل">
+      </label>
+      <label>
+        رقم الهاتف
+        <input type="tel" id="input-cust-phone" placeholder="مثال: 01012345678">
+      </label>
+      <label>
+        العنوان / القرية أو المدينة
+        <input type="text" id="input-cust-address" placeholder="مثال: كفر الشيخ">
+      </label>
+      <label>
+        ملاحظات (اختياري)
+        <textarea id="input-cust-notes" rows="2" placeholder="أي ملاحظات إضافية عن العميل"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="modal-customer">إلغاء</button>
+        <button type="submit" class="btn btn-primary">حفظ العميل</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== نافذة إضافة/تعديل عملية شراء ===================== -->
+<div class="modal-overlay hidden" id="modal-purchase">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-purchase-title">إضافة عملية شراء</h3>
+      <button class="modal-close" data-close="modal-purchase">✕</button>
+    </div>
+    <form id="form-purchase" class="modal-form">
+      <label>
+        اسم المنتج *
+        <input type="text" id="input-prod-name" required placeholder="مثال: مبيد حشري X">
+      </label>
+      <label>
+        نوع المنتج
+        <input type="text" id="input-prod-type" placeholder="مثال: مبيد حشري / مبيد فطري / سماد">
+      </label>
+      <div class="form-row">
+        <label>
+          السعر (للوحدة) *
+          <input type="number" id="input-prod-price" required min="0" step="0.01" placeholder="0">
+        </label>
+        <label>
+          الكمية *
+          <input type="number" id="input-prod-qty" required min="1" step="1" value="1">
+        </label>
+      </div>
+      <label>
+        تاريخ الشراء *
+        <input type="date" id="input-prod-date" required>
+      </label>
+      <label>
+        ملاحظات (اختياري)
+        <textarea id="input-prod-notes" rows="2" placeholder="أي ملاحظات عن عملية الشراء"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="modal-purchase">إلغاء</button>
+        <button type="submit" class="btn btn-primary">حفظ العملية</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== نافذة تأكيد الحذف ===================== -->
+<div class="modal-overlay hidden" id="modal-confirm">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h3>تأكيد الحذف</h3>
+      <button class="modal-close" data-close="modal-confirm">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-message">هل أنت متأكد من الحذف؟</p>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close="modal-confirm">إلغاء</button>
+      <button type="button" class="btn btn-danger" id="btn-confirm-delete">نعم، احذف</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== رسالة تنبيه سريعة (Toast) ===================== -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
